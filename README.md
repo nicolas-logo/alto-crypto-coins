@@ -6,8 +6,8 @@
 - Use of constant file for urls prepared for easily adding new ones
 - Handling Enter key press when making request in order to prevent API client from struggling
 - Array and object desctructuring 
-- Impelemtation of ES2020 syntax link '?.' for preventing from undefined related errors
-- Use of dependency on Coin page's useEffect of searchText to reload coin information in case of surfing on same page with different parameters
+- Impelemtation of ES2020 syntax like '?.' for preventing from undefined related errors
+- Use of dependency on Coin page's useEffect of searchText to reload coin information in case of surfing on same page with different parameters (switching between BTC and ETH pages)
 - Routing to navigate to different pages
 - Showing trending coins for default on Home page
 
