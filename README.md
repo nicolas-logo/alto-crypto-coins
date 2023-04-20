@@ -10,6 +10,7 @@
 - Use of dependency on Coin page's useEffect of searchText to reload coin information in case of surfing on same page with different parameters (switching between BTC and ETH pages)
 - Routing to navigate to different pages
 - Showing trending coins for default on Home page
+- Using react-bootstrap
 
 ### What I would have liked to implement
 - Pagination of search results
