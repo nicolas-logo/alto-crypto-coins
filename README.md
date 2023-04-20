@@ -2,7 +2,7 @@
 
 
 ## Good practices implemented
-- Folder structure prepared for expantion (clientsApi, constants, components, pages)
+- Folder structure prepared for expantion (clientsApi, constants, components, pages, assets)
 - Use of constant file for urls prepared for easily adding new ones
 - Handling Enter key press when making request in order to prevent API client from struggling
 - Array and object desctructuring 
@@ -10,6 +10,10 @@
 - Use of dependency on Coin page's useEffect of searchText to reload coin information in case of surfing on same page with different parameters
 - Routing to navigate to different pages
 
+### what I would have liked to implement
+- Pagination of search results
+- API Client errors handling
+- API Cient objects mapped to app objects
 
 ## Available Scripts
 
