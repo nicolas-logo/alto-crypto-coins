@@ -11,7 +11,7 @@
 - Routing to navigate to different pages
 - Showing trending coins for default on Home page
 
-### what I would have liked to implement
+### What I would have liked to implement
 - Pagination of search results
 - API Client errors handling
 - API Cient objects mapped to app objects
