@@ -17,7 +17,9 @@ const Coin = () => {
         setCoin(c);
         console.log(c);
     }
-
+    
+    
+    // searchParams dependency added to handdle surfing on the same page with different paramenters
     useEffect(() => {
         getCoin();
     },[searchParams])
