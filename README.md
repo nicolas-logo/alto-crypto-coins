@@ -3,9 +3,10 @@
 
 ## Good practices implemented
 - Folder structure prepared for expantion (clientsApi, constants, components, pages)
-- Use of constant file for urls prepared for expantion
+- Use of constant file for urls prepared for easily adding new ones
 - Handling Enter key press when making request in order to prevent API client from struggling
 - Array and object desctructuring 
+- Impelemtation of ES2020 syntax link '?.' for preventing from undefined related errors
 - Use of dependency on Coin page's useEffect of searchText to reload coin information in case of surfing on same page with different parameters
 - Routing to navigate to different pages
 
