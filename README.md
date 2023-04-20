@@ -1,6 +1,14 @@
-# Getting Started with Create React App
+# Coins App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Good practices implemented
+- Folder structure prepared for expantion (clientsApi, constants, components, pages)
+- Use of constant file for urls prepared for expantion
+- Handling Enter key press when making request in order to prevent API client from struggling
+- Array and object desctructuring 
+- Use of dependency on Coin page's useEffect of searchText to reload coin information in case of surfing on same page with different parameters
+- Routing to navigate to different pages
+
 
 ## Available Scripts
 
@@ -21,6 +29,4 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
