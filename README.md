@@ -1,7 +1,7 @@
 # Coins App
 
 
-## Good practices implemented
+## Good practices and nice to have implemented
 - Folder structure prepared for expantion (clientsApi, constants, components, pages, assets)
 - Use of constant file for urls prepared for easily adding new ones
 - Handling Enter key press when making request in order to prevent API client from struggling
@@ -9,6 +9,7 @@
 - Impelemtation of ES2020 syntax link '?.' for preventing from undefined related errors
 - Use of dependency on Coin page's useEffect of searchText to reload coin information in case of surfing on same page with different parameters
 - Routing to navigate to different pages
+- Showing trending coins for default on Home page
 
 ### what I would have liked to implement
 - Pagination of search results
