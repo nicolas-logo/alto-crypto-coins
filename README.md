@@ -15,6 +15,7 @@
 - Pagination of search results
 - API Client errors handling
 - API Cient objects mapped to app objects
+- Tests
 
 ## Available Scripts
 
