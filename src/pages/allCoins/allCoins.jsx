@@ -1,5 +1,5 @@
 import React from 'react';
-import searchIcon from './../../search.svg';
+import searchIcon from './../../Assets/search.svg';
 import CoinCard from '../../components/coinCard/coinCard'
 import { useEffect, useState } from "react";
 import { GetCoinList, SearchCoins } from '../../apiClients/coinClientAPI';
