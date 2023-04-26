@@ -4,6 +4,7 @@ import CoinCard from '../../components/coinCard/coinCard'
 import { useEffect, useState } from "react";
 import { GetCoinList, SearchCoins } from '../../apiClients/coinClientAPI';
 import { Link } from 'react-router-dom';
+import CoinContentType from '../../contentTypes/coins';
 
 
 const AllCoins = () => {
@@ -14,12 +15,18 @@ const AllCoins = () => {
 
     const getDefaultCoinList = async () => {
         const coinList = await GetCoinList();
-        setCoins(coinList.coins);
+
+        const coinsMapped = coinList.coins.map(coin => CoinContentType(coin));
+
+        setCoins(coinsMapped);
     }
 
-    const searchCoin = async () => {
+    const searchCoin = async () => {debugger;
         const coinList = await SearchCoins({searchText});
-        setCoins(coinList.coins);
+        
+        const coinsMapped = coinList.coins.map(coin => CoinContentType(coin));
+        
+        setCoins(coinsMapped);
         setShowingTrendingCoins(false);
     }
 
@@ -57,28 +64,14 @@ const AllCoins = () => {
                 <div className="container">
                     {
                         coins?.length > 0 ? 
-                            (coins.map(coin => (
-                                // this is made like this because trending coins response has different structure
-                                // could be also restructured on the response of the API and using just 1 Link Card instead of 2
-                                coin.item ? (
-                                <Link key={coin.item.id} to={`/coin?id=${coin.item.id}`}>
-                                    <CoinCard 
-                                        id={coin.item.id} 
-                                        name={coin.item.name} 
-                                        image={coin.item.small}
-                                        symbol={coin.item.symbol} />
-                                </Link>
-                                ) :
-                                (
+                            (coins.map(coin => ( 
                                 <Link key={coin.id} to={`/coin?id=${coin.id}`}>
                                     <CoinCard 
                                         id={coin.id} 
                                         name={coin.name} 
                                         image={coin.thumb}
                                         symbol={coin.symbol} />
-                                </Link>
-                                )
-                                    
+                                </Link>     
                             ))) :
                             <h3>No coins matched...</h3>
                     }
