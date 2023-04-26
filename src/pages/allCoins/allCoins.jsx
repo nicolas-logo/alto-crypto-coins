@@ -37,18 +37,23 @@ const AllCoins = () => {
     return(
         <>
             <div className="search">
-                    <input
-                        placeholder="Search for coin..."
-                        onChange={(event) => {setSearchText(event.target.value)}}
-                        onKeyDown={handleKeyDown}
-                    />
-                    <img
-                        src={searchIcon}
-                        alt="search"
-                        onClick={() => {}}
-                    />
-                </div>
-                {showingTrendingCoins ? (<h3>Trending Coins:</h3>): null}
+                <input
+                    placeholder="Search for coin..."
+                    onChange={(event) => {setSearchText(event.target.value)}}
+                    onKeyDown={handleKeyDown}
+                />
+                <img
+                    src={searchIcon}
+                    alt="search"
+                    onClick={() => {}}
+                />
+            </div>
+            <main>
+                { showingTrendingCoins ? (
+                    <div className='row'>
+                        <h3>Trending Coins:</h3>
+                    </div>
+                ): null } 
                 <div className="container">
                     {
                         coins.map(coin => (
@@ -76,6 +81,7 @@ const AllCoins = () => {
                         ))
                     }
                 </div>
+            </main>
         </>
     );
 }
