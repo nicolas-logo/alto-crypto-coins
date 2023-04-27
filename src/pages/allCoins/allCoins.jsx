@@ -1,7 +1,7 @@
 import React from 'react';
 import searchIcon from './../../Assets/search.svg';
 import CoinCard from '../../components/coinCard/coinCard'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { GetCoinList, SearchCoins } from '../../apiClients/coinClientAPI';
 import { Link } from 'react-router-dom';
 import CoinContentType from '../../contentTypes/coins';
@@ -10,8 +10,10 @@ import ValidateSearchText  from '../../utils/searchUtils';
 
 const AllCoins = () => {
     const [coins, setCoins] = useState([]);
-    const [searchText, setSearchText] = useState([]);
-    const [searchError, setSearchError] = useState([]);
+    const [searchText, setSearchText] = useState('');
+    const [searchError, setSearchError] = useState('');
+
+    const prevSearch = useRef(searchText);
 
     //this is used just to show or not trending coins h3
     const [showingTrendingCoins, setShowingTrendingCoins] = useState(true);
@@ -25,6 +27,9 @@ const AllCoins = () => {
     }
 
     const searchCoin = async () => {
+        if (searchText === prevSearch.current) return;
+        
+        prevSearch.current = searchText
         const { error } = ValidateSearchText({searchText});
 
         setSearchError(error);
