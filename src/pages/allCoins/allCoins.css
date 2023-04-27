@@ -1,0 +1,10 @@
+.sort_input label {
+    font-size: 20px;
+}
+
+.sort_input input {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    vertical-align: sub;
+}

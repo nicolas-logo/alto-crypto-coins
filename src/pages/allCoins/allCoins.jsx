@@ -1,17 +1,17 @@
 import React from 'react';
-import searchIcon from './../../Assets/search.svg';
 import CoinCard from '../../components/coinCard/coinCard'
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { GetCoinList, SearchCoins } from '../../apiClients/coinClientAPI';
 import { Link } from 'react-router-dom';
 import CoinContentType from '../../contentTypes/coins';
 import ValidateSearchText  from '../../utils/searchUtils';
-
+import './allCoins.css';
 
 const AllCoins = () => {
     const [coins, setCoins] = useState([]);
     const [searchText, setSearchText] = useState('');
     const [searchError, setSearchError] = useState('');
+    const [sort, setSort] = useState(false);
 
     const prevSearch = useRef(searchText);
 
@@ -51,7 +51,17 @@ const AllCoins = () => {
 
     useEffect(() => {
         getDefaultCoinList();
-    },[])
+    },[]);
+
+    const handleSort = () => {
+        setSort(!sort);
+    }
+
+    useMemo(() => {
+        if (sort) {
+            setCoins(coins.sort((a, b) => a.name.localeCompare(b.name)))
+        }
+    }, [sort, coins])
 
     return(
         <>
@@ -62,11 +72,10 @@ const AllCoins = () => {
                     onChange={(event) => {setSearchText(event.target.value)}}
                     onKeyDown={handleKeyDown}
                 />
-                <img
-                    src={searchIcon}
-                    alt="search"
-                    onClick={() => {}}
-                />
+                <div className='sort_input'>
+                    <label>Sort</label>
+                    <input type='checkbox' onChange={handleSort} />
+                </div>
             </div>
             <main>
                 <p className='labelError'>{searchError}</p>
