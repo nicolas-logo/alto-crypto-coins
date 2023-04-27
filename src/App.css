@@ -142,6 +142,11 @@ h1 {
   color: #f9d3b4;
 }
 
+.labelError {
+  color: red;
+  text-align: center;
+}
+
 @media screen and (max-width: 600px) {
   .app {
     padding: 4rem 2rem;

@@ -5,11 +5,14 @@ import { useEffect, useState } from "react";
 import { GetCoinList, SearchCoins } from '../../apiClients/coinClientAPI';
 import { Link } from 'react-router-dom';
 import CoinContentType from '../../contentTypes/coins';
+import ValidateSearchText  from '../../utils/searchUtils';
 
 
 const AllCoins = () => {
     const [coins, setCoins] = useState([]);
     const [searchText, setSearchText] = useState([]);
+    const [searchError, setSearchError] = useState([]);
+
     //this is used just to show or not trending coins h3
     const [showingTrendingCoins, setShowingTrendingCoins] = useState(true);
 
@@ -21,9 +24,13 @@ const AllCoins = () => {
         setCoins(coinsMapped);
     }
 
-    const searchCoin = async () => {debugger;
+    const searchCoin = async () => {
+        const { error } = ValidateSearchText({searchText});
+
+        setSearchError(error);
+        if (error) return;
+
         const coinList = await SearchCoins({searchText});
-        
         const coinsMapped = coinList.coins.map(coin => CoinContentType(coin));
         
         setCoins(coinsMapped);
@@ -46,6 +53,7 @@ const AllCoins = () => {
             <div className="search">
                 <input
                     placeholder="Search for coin..."
+                    value={searchText}
                     onChange={(event) => {setSearchText(event.target.value)}}
                     onKeyDown={handleKeyDown}
                 />
@@ -56,6 +64,7 @@ const AllCoins = () => {
                 />
             </div>
             <main>
+                <p className='labelError'>{searchError}</p>
                 { showingTrendingCoins ? (
                     <div className='row'>
                         <h3>Trending Coins:</h3>
