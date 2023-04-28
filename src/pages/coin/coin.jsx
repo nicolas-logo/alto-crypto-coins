@@ -35,10 +35,10 @@ const Coin = () => {
                     <h3>{coin.symbol}</h3>
                     <h5>{coin.name}</h5>
                     <div className='row'>
-                        <h7><b>Current Price:</b> {coin.market_data?.current_price.usd}</h7>
+                        <h6><b>Current Price:</b> {coin.market_data?.current_price.usd}</h6>
                     </div>
                     <div className='row'>
-                        <h7><b>Supply:</b> {coin.market_data?.total_supply}</h7>
+                        <h6><b>Supply:</b> {coin.market_data?.total_supply}</h6>
                     </div>
                     
                 </div>

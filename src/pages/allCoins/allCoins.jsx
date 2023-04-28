@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import CoinCard from '../../components/coinCard/coinCard'
 import { useEffect, useState, useRef, useMemo } from "react";
 import { GetCoinList, SearchCoins } from '../../apiClients/coinClientAPI';
 import { Link } from 'react-router-dom';
 import CoinContentType from '../../contentTypes/coins';
 import ValidateSearchText  from '../../utils/searchUtils';
+import { SearchContext } from '../main/main';
+
 import './allCoins.css';
 
 const AllCoins = () => {
     const [coins, setCoins] = useState([]);
-    const [searchText, setSearchText] = useState('');
+    const {searchText, setSearchText} = useContext(SearchContext);
     const [searchError, setSearchError] = useState('');
     const [sort, setSort] = useState(false);
 
@@ -18,8 +20,9 @@ const AllCoins = () => {
     //this is used just to show or not trending coins h3
     const [showingTrendingCoins, setShowingTrendingCoins] = useState(true);
 
-    const getDefaultCoinList = async () => {
-        const coinList = await GetCoinList();
+    const GetCoins = async () => {
+        const coinList = searchText ? await searchCoin() : await GetCoinList();
+        setShowingTrendingCoins(searchText === '');
 
         const coinsMapped = coinList.coins.map(coin => CoinContentType(coin));
 
@@ -27,7 +30,7 @@ const AllCoins = () => {
     }
 
     const searchCoin = async () => {
-        if (searchText === prevSearch.current) return;
+        //if (searchText === prevSearch.current) return;
         
         prevSearch.current = searchText
         const { error } = ValidateSearchText({searchText});
@@ -36,21 +39,20 @@ const AllCoins = () => {
         if (error) return;
 
         const coinList = await SearchCoins({searchText});
-        const coinsMapped = coinList.coins.map(coin => CoinContentType(coin));
+
+        return coinList;
         
-        setCoins(coinsMapped);
-        setShowingTrendingCoins(false);
     }
 
     //to prevent multiple request to the api, we just search on Enter
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            searchCoin();
+            GetCoins();
         }
       }
 
     useEffect(() => {
-        getDefaultCoinList();
+        GetCoins();
     },[]);
 
     const handleSort = () => {
