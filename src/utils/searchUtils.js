@@ -1,10 +1,10 @@
-const emptyErrorMessage = 'Text can not be empty';
+//const emptyErrorMessage = 'Text can not be empty';
 const lengthErrorMessage = 'Text should have at least 3 characters';
 
 const ValidateSearchText = ({searchText}) => {
-    if (searchText === '') {
+    /* if (searchText === '') {
         return { error: emptyErrorMessage }
-    }
+    } */
     if (searchText.length < 3) {
         return { error: lengthErrorMessage }
     }

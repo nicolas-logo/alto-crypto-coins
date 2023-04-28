@@ -1,17 +1,18 @@
 import React, { useContext } from 'react';
 import CoinCard from '../../components/coinCard/coinCard'
 import { useEffect, useState, useRef, useMemo } from "react";
-import { GetCoinList, SearchCoins } from '../../apiClients/coinClientAPI';
+import { GetDefaultCoinList, SearchCoins } from '../../apiClients/coinClientAPI';
 import { Link } from 'react-router-dom';
 import CoinContentType from '../../contentTypes/coins';
 import ValidateSearchText  from '../../utils/searchUtils';
 import { SearchContext } from '../main/main';
+import { useAppContext } from '../../providers/AppProvider';
 
 import './allCoins.css';
 
 const AllCoins = () => {
+    const {searchText, dispatch} = useAppContext();
     const [coins, setCoins] = useState([]);
-    const {searchText, setSearchText} = useContext(SearchContext);
     const [searchError, setSearchError] = useState('');
     const [sort, setSort] = useState(false);
 
@@ -21,7 +22,7 @@ const AllCoins = () => {
     const [showingTrendingCoins, setShowingTrendingCoins] = useState(true);
 
     const GetCoins = async () => {
-        const coinList = searchText ? await searchCoin() : await GetCoinList();
+        const coinList = searchText ? await searchCoin() : await GetDefaultCoinList();
         setShowingTrendingCoins(searchText === '');
 
         const coinsMapped = coinList.coins.map(coin => CoinContentType(coin));
@@ -65,13 +66,20 @@ const AllCoins = () => {
         }
     }, [sort, coins])
 
+    const handleSearchText = (text) => {
+        dispatch({
+            type: 'UPDATE_SEARCH_TEXT',
+            value: text
+        })
+    }
+
     return(
         <>
             <div className="search">
                 <input
                     placeholder="Search for coin..."
                     value={searchText}
-                    onChange={(event) => {setSearchText(event.target.value)}}
+                    onChange={(event) => {handleSearchText(event.target.value)}}
                     onKeyDown={handleKeyDown}
                 />
                 <div className='sort_input'>

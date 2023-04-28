@@ -1,7 +1,7 @@
 const ROOT_API_URL = 'https://api.coingecko.com/api/v3';
 
 
-const GetCoinList = async () => {
+const GetDefaultCoinList = async () => {
     const response = await fetch(`${ROOT_API_URL}/search/trending`);
     const data = await response.json();
     return data;
@@ -20,4 +20,4 @@ const SearchCoins = async ({searchText}) => {
 }
 
 
-export { GetCoinList, GetCoin, SearchCoins };
+export { GetDefaultCoinList, GetCoin, SearchCoins };
