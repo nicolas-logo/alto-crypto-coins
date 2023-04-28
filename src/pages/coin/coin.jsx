@@ -1,26 +1,27 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { GetCoin } from '../../apiClients/coinClientAPI';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Image from 'react-bootstrap/Image';
 import './coin.css';
 
 const Coin = () => {
 
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
 
     const [coin, setCoin] = useState([]);
 
-    const getCoin = async () => {
+    const getCoin = useCallback( async () => {
         const id = searchParams.get('id');
         const c = await GetCoin({id});
         setCoin(c);
         console.log(c);
-    }
+    },[searchParams])
 
     useEffect(() => {
         getCoin();
-    },[searchParams])
+    },[getCoin])
+    
     return(
         <div className='container-md'>
             <div className='row mt-5'>
