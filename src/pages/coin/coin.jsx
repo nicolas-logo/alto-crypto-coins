@@ -15,13 +15,12 @@ const Coin = () => {
         const id = searchParams.get('id');
         const c = await GetCoin({id});
         setCoin(c);
-        console.log(c);
     },[searchParams])
 
     useEffect(() => {
         getCoin();
     },[getCoin])
-    
+
     return(
         <div className='container-md'>
             <div className='row mt-5'>
