@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import CoinCard from '../../components/coinCard/coinCard'
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { GetDefaultCoinList, SearchCoins } from '../../apiClients/coinClientAPI';
 import { Link } from 'react-router-dom';
 import CoinContentType from '../../contentTypes/coins';
@@ -21,16 +21,7 @@ const AllCoins = () => {
     //this is used just to show or not trending coins h3
     const [showingTrendingCoins, setShowingTrendingCoins] = useState(true);
 
-    const GetCoins = async () => {
-        const coinList = searchText ? await searchCoin() : await GetDefaultCoinList();
-        setShowingTrendingCoins(searchText === '');
-
-        const coinsMapped = coinList.coins.map(coin => CoinContentType(coin));
-
-        setCoins(coinsMapped);
-    }
-
-    const searchCoin = async () => {
+    const searchCoin = useCallback(async () => {
         //if (searchText === prevSearch.current) return;
         
         prevSearch.current = searchText
@@ -43,7 +34,18 @@ const AllCoins = () => {
 
         return coinList;
         
-    }
+    },[searchText])
+    
+    const GetCoins = useCallback(async () => {
+        const coinList = searchText ? await searchCoin() : await GetDefaultCoinList();
+        setShowingTrendingCoins(searchText === '');
+
+        const coinsMapped = coinList.coins.map(coin => CoinContentType(coin));
+
+        setCoins(coinsMapped);
+    }, [searchText, searchCoin]);
+
+    
 
     //to prevent multiple request to the api, we just search on Enter
     const handleKeyDown = (event) => {
