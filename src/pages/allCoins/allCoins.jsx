@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
 import CoinCard from '../../components/coinCard/coinCard'
 import { useEffect, useState, useRef, useMemo, useCallback } from "react";
-import { GetDefaultCoinList, SearchCoins } from '../../apiClients/coinClientAPI';
+import { GetDefaultCoinList, SearchCoins, GetRequestToken, CancelRequestToken } from '../../apiClients/coinClientAPI';
 import { Link } from 'react-router-dom';
 import CoinContentType from '../../contentTypes/coins';
 import ValidateSearchText  from '../../utils/searchUtils';
-import { SearchContext } from '../main/main';
 import { useAppContext } from '../../providers/AppProvider';
+import _ from 'lodash';
 
 import './allCoins.css';
+
+let requestToken;
 
 const AllCoins = () => {
     const {searchText, dispatch} = useAppContext();
@@ -30,14 +31,14 @@ const AllCoins = () => {
         setSearchError(error);
         if (error) return;
 
-        const coinList = await SearchCoins({searchText});
+        const coinList = await SearchCoins({searchText, requestToken});
 
         return coinList;
         
     },[searchText])
     
     const GetCoins = useCallback(async () => {
-        const coinList = searchText ? await searchCoin() : await GetDefaultCoinList();
+        const coinList = searchText ? await searchCoin() : await GetDefaultCoinList({requestToken});
         setShowingTrendingCoins(searchText === '');
 
         const coinsMapped = coinList.coins.map(coin => CoinContentType(coin));
@@ -50,12 +51,17 @@ const AllCoins = () => {
     //to prevent multiple request to the api, we just search on Enter
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            GetCoins();
+            GetCoins({requestToken});
         }
       }
 
     useEffect(() => {
-        GetCoins();
+        requestToken = GetRequestToken();
+        GetCoins({requestToken});
+        return() => {
+            CancelRequestToken({requestToken});
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     const handleSort = () => {
@@ -100,12 +106,12 @@ const AllCoins = () => {
                     {
                         coins?.length > 0 ? 
                             (coins.map(coin => ( 
-                                <Link key={coin.id} to={`/coin?id=${coin.id}`}>
+                                <Link key={ _.get(coin,'id') } to={`/coin?id=${ _.get(coin,'id') }`}>
                                     <CoinCard 
-                                        id={coin.id} 
-                                        name={coin.name} 
-                                        image={coin.thumb}
-                                        symbol={coin.symbol} />
+                                        id={ _.get(coin,'id') } 
+                                        name={ _.get(coin,'name') } 
+                                        image={ _.get(coin,'thumb') }
+                                        symbol={ _.get(coin,'symbol') } />
                                 </Link>     
                             ))) :
                             <h3>No coins matched...</h3>

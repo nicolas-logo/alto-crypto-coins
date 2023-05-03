@@ -1,46 +1,39 @@
 import axios from 'axios';
 const ROOT_API_URL = 'https://api.coingecko.com/api/v3';
-let cancelToken;
 
-const cleanRequests = () => {
-    if (cancelToken) {
-        try {
-            cancelToken.cancel();
-            cancelToken = axios.CancelToken.source();
-        } catch (error) {
-            cancelToken = axios.CancelToken.source();
-            //console.log(error)
-        }
-    }
-    else {
-        cancelToken = axios.CancelToken.source();
+const GetRequestToken = () => {
+    const requestToken = axios.CancelToken.source();
+    return requestToken;
+}
+
+const CancelRequestToken = ({requestToken}) => {
+    try {
+        requestToken.cancel();        
+    } catch (error) {
+        //err
     }
 }
 
-const GetDefaultCoinList = async () => {
-    cleanRequests();
+const GetDefaultCoinList = async ({requestToken}) => {
     const response = await axios.get(`${ROOT_API_URL}/search/trending`, {
-        cancelToken: cancelToken.token
+        cancelToken: requestToken.token
     });
     return response.data;
 }
 
-const GetCoin = async ({id}) => {
-    cleanRequests();
+const GetCoin = async ({id, requestToken}) => {
     const response = await axios.get(`${ROOT_API_URL}/coins/${id}`, {
-        cancelToken: cancelToken.token
+        cancelToken: requestToken.token
     });
     return response.data;
 }
 
-const SearchCoins = async ({searchText}) => {
-    cleanRequests();
-    cancelToken = axios.CancelToken.source();
+const SearchCoins = async ({searchText, requestToken}) => {
     const response = await axios.get(`${ROOT_API_URL}/search?query=${searchText}`, {
-        cancelToken: cancelToken.token
+        cancelToken: requestToken.token
     });
     return response.data;
 }
 
 
-export { GetDefaultCoinList, GetCoin, SearchCoins };
+export { GetDefaultCoinList, GetCoin, SearchCoins, GetRequestToken, CancelRequestToken };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { GetCoin } from '../../apiClients/coinClientAPI';
+import { GetCoin, GetRequestToken, CancelRequestToken } from '../../apiClients/coinClientAPI';
 import { useEffect, useState, useCallback } from "react";
 import Image from 'react-bootstrap/Image';
 import './coin.css';
@@ -10,16 +10,23 @@ const Coin = () => {
     const [searchParams] = useSearchParams();
 
     const [coin, setCoin] = useState([]);
+    const [requestToken, setRequestToken] = useState({});
 
     const getCoin = useCallback( async () => {
         const id = searchParams.get('id');
-        const c = await GetCoin({id});
+        const c = await GetCoin({id, requestToken});
         setCoin(c);
-    },[searchParams])
+    },[searchParams, requestToken])
 
     useEffect(() => {
+        setRequestToken(GetRequestToken());
         getCoin();
-    },[getCoin])
+
+        return() => {
+            CancelRequestToken({requestToken})
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     return(
         <div className='container-md'>
