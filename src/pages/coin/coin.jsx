@@ -17,10 +17,8 @@ const Coin = () => {
         const id = searchParams.get('id');
         const c = await GetCoin({id, requestToken});
         setCoin(c);
-        console.log(c);
-    });
-    
-    // searchParams dependency added to handdle surfing on the same page with different paramenters
+    },[searchParams])
+
     useEffect(() => {
         setRequestToken(GetRequestToken());
         getCoin();
@@ -29,7 +27,7 @@ const Coin = () => {
             CancelRequestToken({requestToken})
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    },[getCoin])
 
     return(
         <div className='container-md'>
