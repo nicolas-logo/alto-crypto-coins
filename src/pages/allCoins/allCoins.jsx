@@ -107,11 +107,7 @@ const AllCoins = () => {
                         coins?.length > 0 ? 
                             (coins.map(coin => ( 
                                 <Link key={ _.get(coin,'id') } to={`/coin?id=${ _.get(coin,'id') }`}>
-                                    <CoinCard 
-                                        id={ _.get(coin,'id') } 
-                                        name={ _.get(coin,'name') } 
-                                        image={ _.get(coin,'thumb') }
-                                        symbol={ _.get(coin,'symbol') } />
+                                    <CoinCard {...coin} />
                                 </Link>     
                             ))) :
                             <h3>No coins matched...</h3>

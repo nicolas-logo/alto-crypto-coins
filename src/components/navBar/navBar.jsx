@@ -19,7 +19,7 @@ const NavBar = () => {
                 {
                     //using links from a const file to easily expand them
                     NavLinks.links.map( link => (
-                        <Link key={link.name} to={link.URL} onClick={showNavBar}>{link.name}</Link>
+                        <Link className='link' key={link.name} to={link.URL} onClick={showNavBar}>{link.name}</Link>
                     ))
                 }
                 <button 

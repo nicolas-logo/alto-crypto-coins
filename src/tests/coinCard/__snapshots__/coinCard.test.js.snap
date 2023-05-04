@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Coin Card tests should match the snapshot 1`] = `
+<div
+  className="coin-card"
+  data-testid="coin-card"
+>
+  <div>
+    <img
+      alt="coin"
+      className="coin-thumb mx-auto d-block mt-2 rounded-circle"
+      height={35}
+      src="https://test.com"
+      width={35}
+    />
+    <p
+      name="name"
+    >
+      coin mock name
+    </p>
+    <p
+      name="symbol"
+    >
+      <b>
+        coin symbol
+      </b>
+    </p>
+  </div>
+</div>
+`;

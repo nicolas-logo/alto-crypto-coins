@@ -1,19 +1,19 @@
 import Image from 'react-bootstrap/Image';
 
-const CoinCard = ({name, image, symbol}) => {
+const CoinCard = ({name, thumb, symbol}) => {
     return(
-        <div className="coin-card">
+        <div className="coin-card" data-testid="coin-card">
             <div>
                 <Image 
-                    src={image} 
+                    src={thumb} 
                     alt="coin" 
                     roundedCircle={true}
                     height={35} 
                     width={35}
                     className='coin-thumb mx-auto d-block mt-2'> 
                 </Image>
-                <p>{name}</p>
-                <p><b>{symbol}</b></p>
+                <p name="name">{name}</p>
+                <p name="symbol"><b>{symbol}</b></p>
             </div>
         </div>
     );
