@@ -37,6 +37,7 @@ const AllCoins = () => {
         
     },[searchText])
     
+    
     const GetCoins = useCallback(async () => {
         const coinList = searchText ? await searchCoin() : await GetDefaultCoinList({requestToken});
         setShowingTrendingCoins(searchText === '');
