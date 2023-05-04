@@ -17,7 +17,7 @@ const Coin = () => {
         const id = searchParams.get('id');
         const c = await GetCoin({id, requestToken});
         setCoin(c);
-    },[searchParams, requestToken])
+    },[searchParams])
 
     useEffect(() => {
         setRequestToken(GetRequestToken());
@@ -27,7 +27,7 @@ const Coin = () => {
             CancelRequestToken({requestToken})
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    },[getCoin])
 
     return(
         <div className='container-md'>
