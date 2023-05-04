@@ -17,15 +17,12 @@ const AllCoins = () => {
     const [searchError, setSearchError] = useState('');
     const [sort, setSort] = useState(false);
 
-    const prevSearch = useRef(searchText);
-
     //this is used just to show or not trending coins h3
     const [showingTrendingCoins, setShowingTrendingCoins] = useState(true);
 
     const searchCoin = useCallback(async () => {
         //if (searchText === prevSearch.current) return;
         
-        prevSearch.current = searchText
         const { error } = ValidateSearchText({searchText});
 
         setSearchError(error);
@@ -47,18 +44,10 @@ const AllCoins = () => {
         setCoins(coinsMapped);
     }, [searchText, searchCoin]);
 
-    
-
-    //to prevent multiple request to the api, we just search on Enter
-    const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            GetCoins({requestToken});
-        }
-      }
-
+    const GetCoinsDebounced =  _.debounce(GetCoins, 500);
     useEffect(() => {
         requestToken = GetRequestToken();
-        GetCoins({requestToken});
+        GetCoinsDebounced();
         return() => {
             CancelRequestToken({requestToken});
         }
@@ -82,6 +71,12 @@ const AllCoins = () => {
         })
     }
 
+         useEffect(() => {
+            console.log('searchText modified')
+         GetCoinsDebounced();
+         return () => GetCoinsDebounced.cancel();
+        }, [searchText])
+
     return(
         <>
             <div className="search">
@@ -89,7 +84,7 @@ const AllCoins = () => {
                     placeholder="Search for coin..."
                     value={searchText}
                     onChange={(event) => {handleSearchText(event.target.value)}}
-                    onKeyDown={handleKeyDown}
+                    
                 />
                 <div className='sort_input'>
                     <label>Sort</label>
