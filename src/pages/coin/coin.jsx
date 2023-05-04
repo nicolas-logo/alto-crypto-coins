@@ -17,8 +17,10 @@ const Coin = () => {
         const id = searchParams.get('id');
         const c = await GetCoin({id, requestToken});
         setCoin(c);
-    },[searchParams, requestToken])
-
+        console.log(c);
+    });
+    
+    // searchParams dependency added to handdle surfing on the same page with different paramenters
     useEffect(() => {
         setRequestToken(GetRequestToken());
         getCoin();
