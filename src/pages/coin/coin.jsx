@@ -1,23 +1,54 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { GetCoin, GetRequestToken, CancelRequestToken } from '../../apiClients/coinClientAPI';
+import { GetCoinFromDb, SaveCoinToDb } from '../../apiClients/dbAPI';
+
 import { useEffect, useState, useCallback } from "react";
 import Image from 'react-bootstrap/Image';
 import _ from 'lodash';
 import './coin.css';
 
+// custom hooks
+import MessageLabel from '../../components/messageLabel/messageLabel';
+
 const Coin = () => {
 
     const [searchParams] = useSearchParams();
 
-    const [coin, setCoin] = useState([]);
+    const [coin, setCoin] = useState({});
+    const [comment, setComment] = useState('');
     const [requestToken, setRequestToken] = useState({});
+    const [infoApi, setInfoApi] = useState({type: '', message: '', timeout: null});
 
     const getCoin = useCallback( async () => {
         const id = searchParams.get('id');
         const c = await GetCoin({id, requestToken});
-        setCoin(c);
-    },[searchParams])
+        await setCoin(c);
+    },[searchParams]);
+
+    useEffect(() => {
+        const getCoinFromDb = async () => {
+            const c = coin.symbol ?
+                await GetCoinFromDb({symbol: coin.symbol}) :
+                null;
+            if (c)
+                setComment(c.comment);
+        };
+        getCoinFromDb();
+    },[coin])
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setInfoApi({type: 'warning', message: 'guardando...', timeout: 3000});
+        SaveCoinToDb({symbol: coin.symbol, comment})
+        .then(() => setInfoApi({type: 'success', message: 'guardado', timeout: 3000}))
+        .catch(err => setInfoApi({type: 'danger', message: err.message, timeout: 3000}));
+        
+    }
+
+    const handleCommentChange = (event) => {
+        setComment(event.target.value);
+    }
 
     useEffect(() => {
         setRequestToken(GetRequestToken());
@@ -51,7 +82,19 @@ const Coin = () => {
                     
                 </div>
                 <div className='col-md-9'>
-                    {_.get(coin, 'description.en')}
+                    <div>{_.get(coin, 'description.en')}</div>
+                    <form className='mt-4' onSubmit={handleSubmit}>
+                        <div className='form-group'>
+                            <label htmlFor="text-area">Comentario:</label>
+                            <textarea 
+                                id='text-area' 
+                                className='form-control' 
+                                value={comment}
+                                onChange={handleCommentChange}></textarea>
+                            <button className='btn btn-primary mt-2' type="submit">Guardar</button>
+                            <MessageLabel {...infoApi} ></MessageLabel>
+                        </div>
+                    </form> 
                 </div>
             </div>
         </div>

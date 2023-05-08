@@ -45,6 +45,7 @@ const AllCoins = () => {
     }, [searchText, searchCoin]);
 
     const GetCoinsDebounced =  _.debounce(GetCoins, 500);
+
     useEffect(() => {
         requestToken = GetRequestToken();
         GetCoinsDebounced();
@@ -75,6 +76,8 @@ const AllCoins = () => {
             console.log('searchText modified')
          GetCoinsDebounced();
          return () => GetCoinsDebounced.cancel();
+         //not included GetCoinsDebounced to avoid infinite loop
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [searchText])
 
     return(
