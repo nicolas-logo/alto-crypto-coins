@@ -15,6 +15,11 @@
 ### What I would have liked to implement
 - Pagination of search results but is limited by the API
 
+### Integration with MongoDb
+You can save comments on coins by also running the process:
+https://github.com/nicolas-logo/api-logo
+
+
 ## Available Scripts
 
 In the project directory, you can run:
