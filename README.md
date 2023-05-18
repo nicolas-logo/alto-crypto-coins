@@ -13,10 +13,7 @@
 - Using react-bootstrap
 
 ### What I would have liked to implement
-- Pagination of search results
-- API Client errors handling
-- API Cient objects mapped to app objects
-- Tests
+- Pagination of search results but is limited by the API
 
 ## Available Scripts
 
