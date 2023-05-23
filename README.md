@@ -2,9 +2,12 @@
 
 
 ## Good practices and nice to have implemented
+- Using a provider to save the text searched.
+- Debounce to auto-search for coins when stop writing.
+- Tests.
+- Mapping API object to local object.
 - Folder structure prepared for expantion (clientsApi, constants, components, pages, assets)
 - Use of constant file for urls prepared for easily adding new ones
-- Handling Enter key press when making request in order to prevent API client from struggling
 - Array and object desctructuring 
 - Impelemtation of ES2020 syntax like '?.' for preventing from undefined related errors
 - Use of dependency on Coin page's useEffect of searchText to reload coin information in case of surfing on same page with different parameters (switching between BTC and ETH pages)
