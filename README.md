@@ -16,7 +16,7 @@
 - Pagination of search results but is limited by the API
 
 ### Integration with MongoDb
-You can save comments on coins by also running the process:
+You can save comments on coins on MongoDb by running the API:
 https://github.com/nicolas-logo/api-logo
 
 
