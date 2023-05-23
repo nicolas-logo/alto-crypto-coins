@@ -18,6 +18,7 @@
 ### Integration with MongoDb
 You can save comments on coins on MongoDb by running the API:
 https://github.com/nicolas-logo/api-logo
+![image](https://github.com/nicolas-logo/crypto-coins/assets/26005281/2d3dd5d1-d9e4-425b-964e-2b5d38522ea3)
 
 
 ## Available Scripts
