@@ -1,10 +1,10 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { BrowserRouter as Router, Route, Routes, Outlet } from 'react-router-dom';
 import { AppProvider } from '../../providers/AppProvider';
 
-import NavBar from "../../components/navBar/navBar";
-import AllCoins from '../allCoins/allCoins';
-import Coin from '../coin/coin';
+const NavBar = lazy( () => import("../../components/navBar/navBar"));
+const AllCoins = lazy( () => import("../allCoins/allCoins"));
+const Coin = lazy( () => import("../coin/coin"));
 
 export const SearchContext = React.createContext();
 
@@ -15,13 +15,25 @@ const Main = () => {
     return (
         <AppProvider>
             <Router>
-                <NavBar />
                 <Routes>
-                    <Route path='/' element={<AllCoins />} />
-                    <Route path='/coin' element={<Coin />} />
+                    <Route path='/' element={<Layout />}>
+                        <Route path='/' element={<AllCoins />} />
+                        <Route path='/coin' element={<Coin />} />
+                    </Route>
                 </Routes>
             </Router>
         </AppProvider>
+    )
+}
+
+const Layout = () => {
+    return (
+        <>
+            <NavBar />
+            <Suspense fallback={<h1>Loading...</h1>}>
+                <Outlet />
+            </Suspense>   
+        </>
     )
 }
 
