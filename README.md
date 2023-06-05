@@ -2,9 +2,11 @@
 
 
 ## Good practices and nice to have implemented
-- Using a provider to save the text searched.
-- Debounce to auto-search for coins when stop writing.
-- Tests.
+- Lazy loading of components using Lazy and Suspense.
+- Canceling current API request on component unmount using Axios Token.
+- Provider implemented to save the text searched using React Context and Reducer.
+- Debounce to auto-search for coins when stop writing using Lodash library.
+- Tests using React Testing Library.
 - Mapping API object to local object.
 - Folder structure prepared for expantion (clientsApi, constants, components, pages, assets)
 - Use of constant file for urls prepared for easily adding new ones
