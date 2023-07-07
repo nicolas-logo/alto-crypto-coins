@@ -1,15 +1,15 @@
 # Coins App
-
+Application for looking for information about crypto coins and save personal notes about them.
 
 ## Good practices and nice to have implemented
 - Lazy loading of components using Lazy and Suspense.
 - Canceling current API request on component unmount using Axios Token.
 - Provider implemented to save the text searched using React Context and Reducer.
-- Debounce to auto-search for coins when stop writing using Lodash library.
+- Debounce to auto-search for coins when stopping writing using Lodash library.
 - Tests using React Testing Library.
 - Mapping API object to local object.
 - Folder structure prepared for expansion (clientsApi, constants, components, pages, assets)
-- Use of constant file for urls prepared for easily adding new ones
+- Use of constant file for URLs prepared for easily adding new ones
 - Array and object destructuring 
 - Implementation of ES2020 syntax like '?.' for preventing from undefined related errors
 - Use of dependency on Coin page's useEffect of searchText to reload coin information in case of surfing on same page with different parameters (switching between BTC and ETH pages)
